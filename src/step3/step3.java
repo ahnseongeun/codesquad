@@ -46,12 +46,44 @@ public class step3 {
         System.out.println(sb.toString());
     }
 
-    private static char[][][] cubeMove(char commandAdd, char[][][] cube) {
+    private static char[][][] cubeMove(char command, char[][][] cube) {
+        if(command=='U'){
+            top_left_onePush(cube);
+        }else if(command=='F'){
+            //front_right_onePush(cube);
+        }else if(command=='R'){
+            //right_up_onePush(cube);
+        }else if(command=='L'){
+            //left_down_onePush(cube);
+        }else if(command=='B'){
+            //bottom_left_onePush(cube);
+        }else if(command=='D'){
+            //bottom_right_onePush(cube);
+        }else{
+            System.out.println("Bye~");
+            System.exit(0);
+        }
+        return cube;
+    }
+
+    private static void top_left_onePush(char[][][] cube) {
+        char temp[]=new char[3];
+        char temp2[]=new char[3];
+        char temp3[]=new char[3];
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[0][i][2];
+            cube[0][i][2]= cube[0][i][1];
+            temp2[i] = cube[0][i][3];
+            cube[0][i][3]= temp[i];
+            temp3[i] = cube[0][i][4];
+            cube[0][i][4]= temp2[i];
+            cube[0][i][1]=temp3[i];
+        }
 
     }
 
     private static char[][][] cubeMove(String commandAdd, char[][][] cube) {
-
+        return cube;
     }
 
     public static void main(String[] args) throws Exception {
