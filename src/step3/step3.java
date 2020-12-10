@@ -2,6 +2,7 @@ package step3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class step3 {
@@ -9,7 +10,7 @@ public class step3 {
     static char temp2[]=new char[3];
     static char temp3[]=new char[3];
     static HashMap<Integer,String[]> map=new HashMap<>();
-
+    static long start = System.currentTimeMillis();
     private static char[][][] cubeInit(char[][][] cube) {
         for(int k=0;k<6;k++){
             cube=cubeDataInsert(cube,k);
@@ -50,7 +51,7 @@ public class step3 {
         System.out.println(sb.toString());
     }
 
-    private static char[][][] cubeMove(char command, char[][][] cube) {
+    private static char[][][] cubeMove(char command, char[][][] cube, int count) {
         if(command=='U'){
             top_left_onePush(cube);
         }else if(command=='F'){
@@ -64,7 +65,11 @@ public class step3 {
         }else if(command=='D'){
             bottom_right_onePush(cube);
         }else{
-            System.out.println("Bye~");
+            long end = System.currentTimeMillis();
+            System.out.println("사용자가 종료를 요청 했습니다.");
+            System.out.println("경과시간: "+((end-start)/1000)+"s");
+            System.out.println("조작 갯수:"+ (count));
+            System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
             System.exit(0);
         }
         return cube;
@@ -232,30 +237,52 @@ public class step3 {
         }
     }
 
+    private static void cubeExit(int count){
+        System.out.println("큐브가 제자리로 돌아왔습니다.");
+        long end = System.currentTimeMillis();
+        System.out.println("경과시간: "+((end-start)/1000)+"s");
+        System.out.println("조작 갯수:"+ (count));
+        System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
+        System.exit(0);
+    }
+
+    private static int cubeCommandRunner(String commandList, char[][][] cube,int count,char[][][] cubeEqual) {
+        for (int idx = 0; idx < commandList.length(); idx++) {
+            char command = commandList.charAt(idx);
+            if (idx + 1 != commandList.length() && commandList.charAt(idx + 1) == '\'') {
+                String commandAdd = String.valueOf(command);
+                commandAdd += commandList.charAt(idx + 1);
+                cube = cubeMove(commandAdd, cube);
+                System.out.println(command);
+                count++;
+                idx++;
+            } else {
+                cubeMove(command, cube, count);
+                count++;
+                System.out.println(command);
+            }
+            cubeDisplay(cube);
+        }
+        if(Arrays.deepEquals(cube,cubeEqual)) {
+            cubeExit(count);
+        }
+
+        return count;
+    }
+
     public static void main(String[] args) throws Exception {
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             char cube[][][] = new char[3][3][6];
+            char cubeEqual[][][] = new char[3][3][6];
             cubeHashmap();
             cube = cubeInit(cube);
+            cubeEqual = cubeInit(cubeEqual);
             cubeDisplay(cube);
-
+            int count=0;
             while (true) {
                 System.out.println("<Cube> 명령어를 입력하세요. ");
                 String commandList = input.readLine().toUpperCase();
-                for (int idx = 0; idx < commandList.length(); idx++) {
-                    char command = commandList.charAt(idx);
-                    if (idx + 1 != commandList.length() && commandList.charAt(idx + 1) == '\'') {
-                        String commandAdd = String.valueOf(command);
-                        commandAdd += commandList.charAt(idx + 1);
-                        cube = cubeMove(commandAdd, cube);
-                        System.out.println(command);
-                        idx++;
-                    } else {
-                        cubeMove(command, cube);
-                        System.out.println(command);
-                    }
-                    cubeDisplay(cube);
-                }
+                count=cubeCommandRunner(commandList,cube,count,cubeEqual);
             }
 
         }
