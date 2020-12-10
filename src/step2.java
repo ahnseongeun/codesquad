@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 /**
  * > U  가장 윗줄을 왼쪽으로 한 칸 밀기 RRW -> RWR
@@ -25,31 +24,114 @@ public class step2 {
         System.out.println(sb);
     }
 
-    static void cube_move(char command,char[][] cube){
+    static char[][] cube_move(char command,char[][] cube){
         if(command=='U'){
-            //top_left_onePush(cube);
+            top_left_onePush(cube);
         }else if(command=='R'){
-            //right_up_onePush
+            right_up_onePush(cube);
         }else if(command=='L'){
-            //left_down_onePush
+            left_down_onePush(cube);
         }else if(command=='B'){
-            //bottom_right_onePush
+            bottom_right_onePush(cube);
         }else{
             System.out.println("Bye~");
             System.exit(0);
         }
+        return cube;
     }
 
-    static void cube_move(String command,char[][] cube){
+    static char[][] cube_move(String command,char[][] cube){
         if(command.equals("U'")){
-            //top_right_onePush(cube);
+            return top_right_onePush(cube);
         }else if(command.equals("R'")){
-            //right_down_onePush
+            right_down_onePush(cube);
         }else if(command.equals("L'")){
-            //left_up_onePush
+            left_up_onePush(cube);
         }else{
-            //bottom_left_onePush
+            bottom_left_onePush(cube);
         }
+        return cube;
+    }
+
+    private static char[][] bottom_right_onePush(char[][] cube) {
+        char num1=cube[2][0];
+        char num2=cube[2][1];
+        char num3=cube[2][2];
+        cube[2][0]=num3;
+        cube[2][2]=num2;
+        cube[2][1]=num1;
+        return cube;
+
+    }
+
+    private static char[][] left_down_onePush(char[][] cube) {
+        char num1=cube[0][0];
+        char num2=cube[1][0];
+        char num3=cube[2][0];
+        cube[0][0]=num3;
+        cube[2][0]=num2;
+        cube[1][0]=num1;
+        return cube;
+    }
+
+    private static char[][] right_up_onePush(char[][] cube) {
+        char num1=cube[0][2];
+        char num2=cube[1][2];
+        char num3=cube[2][2];
+        cube[1][2]=num3;
+        cube[0][2]=num2;
+        cube[2][2]=num1;
+        return cube;
+    }
+
+    private static char[][] top_left_onePush(char[][] cube) {
+        char num1=cube[0][0];
+        char num2=cube[0][1];
+        char num3=cube[0][2];
+        cube[0][1]=num3;
+        cube[0][0]=num2;
+        cube[0][2]=num1;
+        return cube;
+    }
+
+    private static char[][] bottom_left_onePush(char[][] cube) {
+        char num1=cube[2][0];
+        char num2=cube[2][1];
+        char num3=cube[2][2];
+        cube[2][1]=num3;
+        cube[2][0]=num2;
+        cube[2][2]=num1;
+        return cube;
+    }
+
+    private static char[][] left_up_onePush(char[][] cube) {
+        char num1=cube[0][0];
+        char num2=cube[1][0];
+        char num3=cube[2][0];
+        cube[1][0]=num3;
+        cube[0][0]=num2;
+        cube[2][0]=num1;
+        return cube;
+    }
+
+    private static char[][] right_down_onePush(char[][] cube) {
+        char num1=cube[0][2];
+        char num2=cube[1][2];
+        char num3=cube[2][2];
+        cube[0][2]=num3;
+        cube[2][2]=num2;
+        cube[1][2]=num1;
+        return cube;
+    }
+
+    private static char[][] top_right_onePush(char[][] cube) {
+        char num1=cube[0][0];
+        char num2=cube[0][1];
+        char num3=cube[0][2];
+        cube[0][0]=num3;
+        cube[0][2]=num2;
+        cube[0][1]=num1;
+        return cube;
     }
 
     public static void main(String[] args) throws Exception{
@@ -59,20 +141,24 @@ public class step2 {
                        {'G','B','B'}};
 
         cube_display(cube);
-        System.out.println("<Cube> 명령어를 입력하세요. ");
 
-        String commandList=input.readLine().toUpperCase();
-        for(int idx=0;idx<commandList.length();idx++){
-            char command=commandList.charAt(idx);
-            if(commandList.charAt(idx+1)=='\'') {
-                String commandAdd = String.valueOf(command);
-                commandAdd+= commandList.charAt(idx + 1);
-                cube_move(commandAdd,cube);
-                idx++;
-            }else{
-                cube_move(command,cube);
+        while(true) {
+            System.out.println("<Cube> 명령어를 입력하세요. ");
+            String commandList=input.readLine().toUpperCase();
+            for (int idx = 0; idx < commandList.length(); idx++) {
+                char command = commandList.charAt(idx);
+                if (idx + 1 != commandList.length() && commandList.charAt(idx + 1) == '\'') {
+                    String commandAdd = String.valueOf(command);
+                    commandAdd += commandList.charAt(idx + 1);
+                    cube = cube_move(commandAdd, cube);
+                    System.out.println(command);
+                    idx++;
+                } else {
+                    cube_move(command, cube);
+                    System.out.println(command);
+                }
+                cube_display(cube);
             }
-            cube_display(cube);
         }
 
     }
