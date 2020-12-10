@@ -1,14 +1,81 @@
-Step-1
-*   입력: 사용자로부터 단어 하나, 정수 숫자 하나 , L 또는 R을 입력받는다. 
-L 또는 R은 대소문자 모두 입력 가능하다.
+Step-3
 
-*   주어진 단어를 L이면 주어진 숫자 갯수만큼 왼쪽으로, R이면 오른쪽으로 밀어낸다.
-밀려나간 단어는 반대쪽으로 채워진다.
+초기 큐브 상태   
 
-* 밀려나간 단어는 반대쪽으로 채워진다.
+UP   
+B B B    
+B B B    
+B B B   
 
-* 예시    
-   input: apple 3 L   
-   output: leapp
+Front   
+O O O   
+O O O   
+O O O    
+
+left   
+W W W    
+W W W    
+W W W    
+
+back    
+G G G     
+G G G    
+G G G     
+
+right    
+Y Y Y     
+Y Y Y     
+Y Y Y      
+
+bottom     
+R R R     
+R R R     
+R R R      
   
+  
+명령어 설명       
+ U - top_left_onePush    
+ F - front_right_onePush    
+ R - right_up_onePush   
+ L - left_down_onePush      
+ B - back_left_onePush      
+ D - bottom_right_onePush   
+ U' - top_right_onePush   
+ F' - front_left_onePush    
+ R' - right_down_onePush   
+ L' - left_up_onePush   
+ B' - back_right_onePush    
+ D' - bottom_left_onePush    
+ 
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+프로그램 예시    
+
+(초기 상태 출력)
+
+Cube> 명령어를 입력하세요.      
+FRR'U2R   
+
+F
+(큐브상태)
+
+R
+(큐브상태)
+
+...
+
+R
+(큐브상태)
+
+CUBE> Q    
+사용자가 종료를 요청 했습니다.     
+경과시간: 31s     
+조작갯수: 6     
+이용해주셔서 감사합니다. 뚜뚜뚜.    
+
+추가기능   
+큐브가 제자리로 돌아왔습니다.    
+경과시간: 31s     
+조작갯수: 6     
+이용해주셔서 감사합니다. 뚜뚜뚜.  
+
   
