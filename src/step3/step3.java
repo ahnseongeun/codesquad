@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class step3 {
+    static char temp[]=new char[3];
+    static char temp2[]=new char[3];
+    static char temp3[]=new char[3];
     static HashMap<Integer,String[]> map=new HashMap<>();
     private static char[][][] cubeInit(char[][][] cube) {
         for(int k=0;k<6;k++){
@@ -50,15 +53,15 @@ public class step3 {
         if(command=='U'){
             top_left_onePush(cube);
         }else if(command=='F'){
-            //front_right_onePush(cube);
+            front_right_onePush(cube);
         }else if(command=='R'){
-            //right_up_onePush(cube);
+            right_up_onePush(cube);
         }else if(command=='L'){
-            //left_down_onePush(cube);
+            left_down_onePush(cube);
         }else if(command=='B'){
-            //bottom_left_onePush(cube);
+            back_left_onePush(cube);
         }else if(command=='D'){
-            //bottom_right_onePush(cube);
+            bottom_right_onePush(cube);
         }else{
             System.out.println("Bye~");
             System.exit(0);
@@ -66,10 +69,67 @@ public class step3 {
         return cube;
     }
 
+    private static void bottom_right_onePush(char[][][] cube) {
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[2][i][4];
+            cube[2][i][4]= cube[2][i][1];
+            temp2[i] = cube[2][i][3];
+            cube[2][i][3]= temp[i];
+            temp3[i] = cube[2][i][2];
+            cube[2][i][2]= temp2[i];
+            cube[2][i][1]=temp3[i];
+        }
+    }
+
+    private static void back_left_onePush(char[][][] cube) {
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[0][i][2];
+            cube[0][i][2]= cube[0][i][0];
+            temp2[i] = cube[0][i][5];
+            cube[0][i][5]= temp[i];
+            temp3[i] = cube[0][i][4];
+            cube[0][i][4]= temp2[i];
+            cube[0][i][0]=temp3[i];
+        }
+    }
+
+    private static void left_down_onePush(char[][][] cube) {
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[i][0][5];
+            cube[i][0][5]= cube[i][0][1];
+            temp2[i] = cube[i][0][3];
+            cube[i][0][3]= temp[i];
+            temp3[i] = cube[i][0][0];
+            cube[i][0][0]= temp2[i];
+            cube[i][0][1]=temp3[i];
+        }
+    }
+
+    private static void right_up_onePush(char[][][] cube) {
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[i][2][0];
+            cube[i][2][0]= cube[i][2][1];
+            temp2[i] = cube[i][2][3];
+            cube[i][2][3]= temp[i];
+            temp3[i] = cube[i][2][5];
+            cube[i][2][5]= temp2[i];
+            cube[i][2][1]=temp3[i];
+        }
+    }
+
+    private static void front_right_onePush(char[][][] cube) {
+        for(int i=0;i<3;i++) {
+            temp[i] = cube[2][i][4];
+            cube[2][i][4]= cube[2][i][0];
+            temp2[i] = cube[2][i][5];
+            cube[2][i][5]= temp[i];
+            temp3[i] = cube[2][i][2];
+            cube[2][i][2]= temp2[i];
+            cube[2][i][0]=temp3[i];
+        }
+    }
+
     private static void top_left_onePush(char[][][] cube) {
-        char temp[]=new char[3];
-        char temp2[]=new char[3];
-        char temp3[]=new char[3];
         for(int i=0;i<3;i++) {
             temp[i] = cube[0][i][2];
             cube[0][i][2]= cube[0][i][1];
@@ -79,7 +139,6 @@ public class step3 {
             cube[0][i][4]= temp2[i];
             cube[0][i][1]=temp3[i];
         }
-
     }
 
     private static char[][][] cubeMove(String commandAdd, char[][][] cube) {
